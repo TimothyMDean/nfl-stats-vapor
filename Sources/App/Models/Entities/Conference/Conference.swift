@@ -4,9 +4,14 @@ import Vapor
 /// An entity that describes an NFL conference
 struct Conference: SQLiteUUIDModel {
 
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+
   var id: UUID?
   var name: String
   var assetPrefix: String
+  var createdAt: Date?
+  var updatedAt: Date?
 
   /// Creates a new Conference entity
   init(id: UUID? = nil, name: String, assetPrefix: String) {
@@ -18,6 +23,6 @@ struct Conference: SQLiteUUIDModel {
 
 extension Conference: Content {}
 
-extension Conference: Migration {}
-
 extension Conference: Parameter {}
+
+extension Conference: Migration {}
