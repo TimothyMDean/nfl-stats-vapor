@@ -8,6 +8,7 @@ final class ConferenceController: RouteCollection {
       let conferencesRoute = router.grouped("conferences")
       conferencesRoute.get(use: index)
       conferencesRoute.get(Conference.parameter, use: get)
+      conferencesRoute.get(Conference.parameter, "divisions", use: getDivisions)
       conferencesRoute.post(Conference.self, use: create)
       conferencesRoute.delete(Conference.parameter, use: delete)
     }
@@ -32,5 +33,12 @@ final class ConferenceController: RouteCollection {
         return try req.parameters.next(Conference.self).flatMap { conference in
             return conference.delete(on: req)
         }.transform(to: .ok)
+    }
+
+    /// Returns the `Division` children of a specific `Conference`
+    func getDivisions(_ req: Request) throws -> Future<[Division]> {
+      return try req.parameters.next(Conference.self).flatMap(to: [Division].self) { conference in
+        try conference.divisions.query(on: req).all()
+      }
     }
 }

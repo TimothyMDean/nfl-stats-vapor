@@ -21,6 +21,16 @@ struct Conference: Codable {
   }
 }
 
+/// Extensions to the base conference entity
+extension Conference {
+
+  /// Returns the child divisions relationship
+  var divisions: Children<Conference, Division> {
+    return children(\.conferenceId)
+  }
+}
+
+
 extension Conference: SQLiteUUIDModel {}
 
 extension Conference: Content {}
