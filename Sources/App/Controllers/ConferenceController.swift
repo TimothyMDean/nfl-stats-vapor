@@ -7,6 +7,7 @@ final class ConferenceController: RouteCollection {
     func boot(router: Router) throws {
       let conferencesRoute = router.grouped("conferences")
       conferencesRoute.get(use: index)
+      conferencesRoute.get(Conference.parameter, use: get)
       conferencesRoute.post(Conference.self, use: create)
       conferencesRoute.delete(Conference.parameter, use: delete)
     }
@@ -14,6 +15,11 @@ final class ConferenceController: RouteCollection {
     /// Returns a list of all `Conference`s.
     func index(_ req: Request) throws -> Future<[Conference]> {
         return Conference.query(on: req).all()
+    }
+
+    /// Returns a specific `Conference`
+    func get(_ req: Request) throws -> Future<Conference> {
+      return try req.parameters.next(Conference.self)
     }
 
     /// Saves a decoded `Conference` to the database.
