@@ -1,7 +1,7 @@
 import FluentSQLite
 import Vapor
 
-// A Fluent migration that seeds the Confluence model with initial values
+// A Fluent migration that seeds the Conference model with initial values
 struct SeedConferences: SQLiteMigration {
 
   // Performs the preparation of the migration
