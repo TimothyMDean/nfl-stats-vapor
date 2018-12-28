@@ -1,8 +1,9 @@
+import Foundation
 import FluentSQLite
 import Vapor
 
 /// An entity that describes an NFL conference
-struct Conference: SQLiteUUIDModel {
+struct Conference: Codable {
 
   static var createdAtKey: TimestampKey? = \.createdAt
   static var updatedAtKey: TimestampKey? = \.updatedAt
@@ -14,12 +15,13 @@ struct Conference: SQLiteUUIDModel {
   var updatedAt: Date?
 
   /// Creates a new Conference entity
-  init(id: UUID? = nil, name: String, assetPrefix: String) {
-    self.id = id
+  init(name: String, assetPrefix: String) {
     self.name = name
     self.assetPrefix = assetPrefix
   }
 }
+
+extension Conference: SQLiteUUIDModel {}
 
 extension Conference: Content {}
 
