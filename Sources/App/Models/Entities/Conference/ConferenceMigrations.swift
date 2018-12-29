@@ -11,7 +11,9 @@ struct SeedConferences: SQLiteMigration {
     return connection.transaction(on: .sqlite) { _ in
       return afc.save(on: connection).flatMap { _ in
         return nfc.save(on: connection)
-      }.map(to: Void.self) {_ in return}
+      }.map(to: Void.self) { _ in 
+        return
+      }
     }
   }
 
