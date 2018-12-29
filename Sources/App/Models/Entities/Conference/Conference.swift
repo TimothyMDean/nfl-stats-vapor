@@ -10,14 +10,14 @@ struct Conference: Codable {
 
   var id: UUID?
   var name: String
-  var assetPrefix: String
+  var abbreviation: String
   var createdAt: Date?
   var updatedAt: Date?
 
   /// Creates a new Conference entity
-  init(name: String, assetPrefix: String) {
+  init(name: String, abbreviation: String) {
     self.name = name
-    self.assetPrefix = assetPrefix
+    self.abbreviation = abbreviation
   }
 }
 

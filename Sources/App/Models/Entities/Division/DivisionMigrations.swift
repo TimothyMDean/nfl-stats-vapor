@@ -8,7 +8,7 @@ struct SeedAfcDivisions: SQLiteMigration {
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
 
     return connection.transaction(on: .sqlite) { _ in
-      return Conference.query(on: connection).filter(\.name == "AFC")
+      return Conference.query(on: connection).filter(\.abbreviation == "AFC")
         .first()
         .flatMap(to: Void.self) { conference in
           if let cid = conference?.id {
@@ -30,7 +30,7 @@ struct SeedAfcDivisions: SQLiteMigration {
 
   // Performs the reversion of the migration
   static func revert(on connection: SQLiteConnection) -> Future<Void> {
-    return Conference.query(on: connection).filter(\.name == "AFC")
+    return Conference.query(on: connection).filter(\.abbreviation == "AFC")
       .first()
       .flatMap(to: Void.self) { conference in
         if let c = conference {
@@ -49,7 +49,7 @@ struct SeedNfcDivisions: SQLiteMigration {
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
 
     return connection.transaction(on: .sqlite) { _ in
-      return Conference.query(on: connection).filter(\.name == "NFC")
+      return Conference.query(on: connection).filter(\.abbreviation == "NFC")
         .first()
         .flatMap(to: Void.self) { conference in
           if let cid = conference?.id {
@@ -71,7 +71,7 @@ struct SeedNfcDivisions: SQLiteMigration {
 
   // Performs the reversion of the migration
   static func revert(on connection: SQLiteConnection) -> Future<Void> {
-    return Conference.query(on: connection).filter(\.name == "NFC")
+    return Conference.query(on: connection).filter(\.abbreviation == "NFC")
       .first()
       .flatMap(to: Void.self) { conference in
         if let c = conference {
