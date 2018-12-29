@@ -9,6 +9,7 @@ final class DivisionController: RouteCollection {
     divisionsRoute.get(use: index)
     divisionsRoute.get(Division.parameter, use: get)
     divisionsRoute.get(Division.parameter, "conference", use: getConference)
+    divisionsRoute.get(Division.parameter, "teams", use: getTeams)
   }
 
   /// Returns a list of all `Division`s.
@@ -25,6 +26,13 @@ final class DivisionController: RouteCollection {
   func getConference(_ req: Request) throws -> Future<Conference> {
     return try req.parameters.next(Division.self).flatMap { division in
       division.conference.get(on: req)
+    }
+  }
+
+  /// Returns the `Team` children of a specific `Division`
+  func getTeams(_ req: Request) throws -> Future<[Team]> {
+    return try req.parameters.next(Division.self).flatMap(to: [Team].self) { division in
+      try division.teams.query(on: req).all()
     }
   }
 }

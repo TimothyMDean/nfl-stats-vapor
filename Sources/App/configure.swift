@@ -28,9 +28,18 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var migrations = MigrationConfig()
     migrations.add(model: Conference.self, database: .sqlite)
     migrations.add(model: Division.self, database: .sqlite)
+    migrations.add(model: Team.self, database: .sqlite)
     migrations.add(migration: SeedConferences.self, database: .sqlite)
     migrations.add(migration: SeedAfcDivisions.self, database: .sqlite)
     migrations.add(migration: SeedNfcDivisions.self, database: .sqlite)
+    migrations.add(migration: SeedAfcNorthTeams.self, database: .sqlite)
+    migrations.add(migration: SeedAfcSouthTeams.self, database: .sqlite)
+    migrations.add(migration: SeedAfcEastTeams.self, database: .sqlite)
+    migrations.add(migration: SeedAfcWestTeams.self, database: .sqlite)
+    migrations.add(migration: SeedNfcNorthTeams.self, database: .sqlite)
+    migrations.add(migration: SeedNfcSouthTeams.self, database: .sqlite)
+    migrations.add(migration: SeedNfcEastTeams.self, database: .sqlite)
+    migrations.add(migration: SeedNfcWestTeams.self, database: .sqlite)
     services.register(migrations)
 
 }

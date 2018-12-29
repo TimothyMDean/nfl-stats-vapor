@@ -21,12 +21,17 @@ struct Division: Codable {
   }
 }
 
-/// Extensions to the base division entity
+/// Extension to the base division entity that adds relationship properties
 extension Division {
 
   /// Returns the parent conference relationship
   var conference: Parent<Division, Conference> {
     return parent(\.conferenceId)
+  }
+
+  /// Returns the child teams relationship
+  var teams: Children<Division, Team> {
+    return children(\.divisionId)
   }
 }
 
