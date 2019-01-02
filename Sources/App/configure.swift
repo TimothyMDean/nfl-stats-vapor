@@ -29,6 +29,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     migrations.add(model: Conference.self, database: .sqlite)
     migrations.add(model: Division.self, database: .sqlite)
     migrations.add(model: Team.self, database: .sqlite)
+    migrations.add(model: Season.self, database: .sqlite)
     migrations.add(migration: SeedConferences.self, database: .sqlite)
     migrations.add(migration: SeedAfcDivisions.self, database: .sqlite)
     migrations.add(migration: SeedNfcDivisions.self, database: .sqlite)
