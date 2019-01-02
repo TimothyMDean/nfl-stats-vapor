@@ -6,14 +6,12 @@ struct SeedConferences: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-    let afc = Conference(name: "American Football Conference", abbreviation: "AFC")
-    let nfc = Conference(name: "National Football Conference", abbreviation: "NFC")
-    return connection.transaction(on: .sqlite) { _ in
-      return afc.save(on: connection).flatMap { _ in
-        return nfc.save(on: connection)
-      }.map(to: Void.self) { _ in
-        return
-      }
+    return connection.transaction(on: .sqlite) { c in
+      let conferences = [
+        Conference(name: "American Football Conference", abbreviation: "AFC"),
+        Conference(name: "National Football Conference", abbreviation: "NFC")
+      ]
+      return conferences.map {$0.save(on: c)}.flatten(on: c).transform(to:())
     }
   }
 

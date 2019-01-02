@@ -6,26 +6,25 @@ struct SeedAfcNorthTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "AFC North")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Baltimore Ravens", abbreviation: "BAL", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Cincinnati Bengals", abbreviation: "CIN", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "Cleveland Browns", abbreviation: "CLE", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "Pittsburgh Steelers", abbreviation: "PIT", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "AFC North")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Baltimore Ravens", abbreviation: "BAL", divisionId: did),
+              Team(name: "Cincinnati Bengals", abbreviation: "CIN", divisionId: did),
+              Team(name: "Cleveland Browns", abbreviation: "CLE", divisionId: did),
+              Team(name: "Pittsburgh Steelers", abbreviation: "PIT", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -47,26 +46,25 @@ struct SeedAfcSouthTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "AFC South")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Houston Texans", abbreviation: "HOU", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Indianapolis Colts", abbreviation: "IND", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "Jacksonville Jaguars", abbreviation: "JAX", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "Tennessee Titans", abbreviation: "TEN", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "AFC South")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Houston Texans", abbreviation: "HOU", divisionId: did),
+              Team(name: "Indianapolis Colts", abbreviation: "IND", divisionId: did),
+              Team(name: "Jacksonville Jaguars", abbreviation: "JAX", divisionId: did),
+              Team(name: "Tennessee Titans", abbreviation: "TEN", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -88,26 +86,25 @@ struct SeedAfcEastTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "AFC East")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Buffalo Bills", abbreviation: "BUF", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Miami Dolphins", abbreviation: "MIA", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "New England Patriots", abbreviation: "NE", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "New York Jets", abbreviation: "NYJ", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "AFC East")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Buffalo Bills", abbreviation: "BUF", divisionId: did),
+              Team(name: "Miami Dolphins", abbreviation: "MIA", divisionId: did),
+              Team(name: "New England Patriots", abbreviation: "NE", divisionId: did),
+              Team(name: "New York Jets", abbreviation: "NYJ", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -129,26 +126,25 @@ struct SeedAfcWestTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "AFC West")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Denver Broncos", abbreviation: "DEN", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Kansas City Chiefs", abbreviation: "KC", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "Los Angeles Chargers", abbreviation: "LAC", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "Oakland Raiders", abbreviation: "OAK", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "AFC West")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Denver Broncos", abbreviation: "DEN", divisionId: did),
+              Team(name: "Kansas City Chiefs", abbreviation: "KC", divisionId: did),
+              Team(name: "Los Angeles Chargers", abbreviation: "LAC", divisionId: did),
+              Team(name: "Oakland Raiders", abbreviation: "OAK", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -170,26 +166,25 @@ struct SeedNfcNorthTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "NFC North")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Chicago Bears", abbreviation: "CHI", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Detroit Lions", abbreviation: "DET", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "Green Bay Packers", abbreviation: "GB", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "Minnesota Vikings", abbreviation: "MIN", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "NFC North")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Chicago Bears", abbreviation: "CHI", divisionId: did),
+              Team(name: "Detroit Lions", abbreviation: "DET", divisionId: did),
+              Team(name: "Green Bay Packers", abbreviation: "GB", divisionId: did),
+              Team(name: "Minnesota Vikings", abbreviation: "MIN", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -211,26 +206,25 @@ struct SeedNfcSouthTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "NFC South")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Atlanta Falcons", abbreviation: "ATL", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Carolina Panthers", abbreviation: "CAR", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "New Orleans Saints", abbreviation: "NO", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "Tampa Bay Buccaneers", abbreviation: "TB", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "NFC South")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Atlanta Falcons", abbreviation: "ATL", divisionId: did),
+              Team(name: "Carolina Panthers", abbreviation: "CAR", divisionId: did),
+              Team(name: "New Orleans Saints", abbreviation: "NO", divisionId: did),
+              Team(name: "Tampa Bay Buccaneers", abbreviation: "TB", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -244,7 +238,7 @@ struct SeedNfcSouthTeams: SQLiteMigration {
           return connection.future();
         }
       }
-  }
+    }
 }
 
 // A Fluent migration that seeds the Team model with NFC East values
@@ -252,26 +246,25 @@ struct SeedNfcEastTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "NFC East")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Dallas Cowboys", abbreviation: "DAL", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "New York Giants", abbreviation: "NYG", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "Philadelphia Eagles", abbreviation: "PHI", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "Washington Redskins", abbreviation: "WAS", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "NFC East")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Dallas Cowboys", abbreviation: "DAL", divisionId: did),
+              Team(name: "New York Giants", abbreviation: "NYG", divisionId: did),
+              Team(name: "Philadelphia Eagles", abbreviation: "PHI", divisionId: did),
+              Team(name: "Washington Redskins", abbreviation: "WAS", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
@@ -293,26 +286,25 @@ struct SeedNfcWestTeams: SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-
-    return connection.transaction(on: .sqlite) { _ in
-      return Division.query(on: connection).filter(\.name == "NFC West")
-        .first()
-        .flatMap(to: Void.self) { division in
-          if let did = division?.id {
-            return Team(name: "Arizona Cardinals", abbreviation: "ARI", divisionId: did).save(on: connection).flatMap { _ in
-              return Team(name: "Los Angeles Rams", abbreviation: "LAR", divisionId: did).save(on: connection).flatMap { _ in
-                return Team(name: "Seattle Seahawks", abbreviation: "SEA", divisionId: did).save(on: connection).flatMap { _ in
-                  return Team(name: "San Francisco 49ers", abbreviation: "SF", divisionId: did).save(on: connection)
-                }
-              }
-            }.map(to: Void.self) { _ in
-              return
-            }
-          } else {
-            return connection.future()
+    return Division.query(on: connection).filter(\.name == "NFC West")
+      .first()
+      .flatMap(to: Void.self) { division in
+        if let did = division?.id {
+          return connection.transaction(on: .sqlite) { c in
+            let teams = [
+              Team(name: "Arizona Cardinals", abbreviation: "ARI", divisionId: did),
+              Team(name: "Los Angeles Rams", abbreviation: "LAR", divisionId: did),
+              Team(name: "Seattle Seahawks", abbreviation: "SEA", divisionId: did),
+              Team(name: "San Francisco 49ers", abbreviation: "SF", divisionId: did)
+            ]
+            return teams.map { team in
+              team.save(on: c)
+            }.flatten(on: c).transform(to:())
           }
+        } else {
+          return connection.future()
         }
-    }
+      }
   }
 
   // Performs the reversion of the migration
