@@ -24,17 +24,27 @@ final class SeasonController: RouteCollection {
 
   /// Creates a new `Season` and returns its URL in the `Location` header
   func create(_ req: Request, season: Season) throws -> Future<HTTPResponse> {
-    return season.save(on: req).map(to: HTTPResponse.self) { season in
-      let location = req.http.url.appendingPathComponent(season.id!.description, isDirectory: false)
-      let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location.path))
-      return HTTPResponse(status: .created, headers: responseHeaders)
+    return req.transaction(on: .sqlite) { connection in
+      return season.save(on: connection).flatMap(to: HTTPResponse.self) { season in
+        if let seasonId = season.id {
+          let location = req.http.url.appendingPathComponent(season.id!.description, isDirectory: false)
+          let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location.path))
+          return (1...17)
+            .map { Week(number:$0, seasonId: seasonId) }
+            .map { $0.save(on: connection) }
+            .flatten(on: connection)
+            .transform(to: HTTPResponse(status: .created, headers: responseHeaders))
+        } else {
+          return req.future(HTTPResponse(status: .internalServerError))
+        }
+      }
     }
   }
 
   /// Returns the list of `Week` entities within a `Season` entity
   func getWeeks(_ req: Request) throws -> Future<[Week]> {
     return try req.parameters.next(Season.self).flatMap(to: [Week].self) { season in
-      try season.weeks.query(on: req).all()
+      try season.weeks.query(on: req).sort(\.number, .ascending).all()
     }
   }
 }
