@@ -14,7 +14,7 @@ final class SeasonController: RouteCollection {
 
   /// Returns a list of all `Season`s.
   func index(_ req: Request) throws -> Future<[Season]> {
-    return Season.query(on: req).all()
+    return Season.query(on: req).sort(\.primaryYear, .ascending).all()
   }
 
   /// Returns a specific `Season`

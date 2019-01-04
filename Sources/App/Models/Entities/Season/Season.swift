@@ -9,6 +9,7 @@ struct Season: Codable {
   static var updatedAtKey: TimestampKey? = \.updatedAt
 
   var id: UUID?
+  var primaryYear: Int
   var label: String
   var activatedAt: Date?
   var inactivatedAt: Date?
@@ -17,7 +18,8 @@ struct Season: Codable {
 
   /// Creates a new `Season` entity. The new season will not initially be
   /// activated. Use the activate method to activate season.
-  init(label: String) {
+  init(primaryYear: Int, label: String) {
+    self.primaryYear = primaryYear
     self.label = label
   }
 
