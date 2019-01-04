@@ -19,7 +19,7 @@ struct SeedAfcNorthTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -59,7 +59,7 @@ struct SeedAfcSouthTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -99,7 +99,7 @@ struct SeedAfcEastTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -139,7 +139,7 @@ struct SeedAfcWestTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -179,7 +179,7 @@ struct SeedNfcNorthTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -219,7 +219,7 @@ struct SeedNfcSouthTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -259,7 +259,7 @@ struct SeedNfcEastTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -299,7 +299,7 @@ struct SeedNfcWestTeams: SQLiteMigration {
             ]
             return teams.map { team in
               team.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()

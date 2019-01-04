@@ -20,7 +20,7 @@ struct SeedAfcDivisions: SQLiteMigration {
             ]
             return divisions.map { division in
               division.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()
@@ -61,7 +61,7 @@ struct SeedNfcDivisions: SQLiteMigration {
             ]
             return divisions.map { division in
               division.save(on: c)
-            }.flatten(on: c).transform(to:())
+            }.flatten(on: c).transform(to: Void())
           }
         } else {
           return connection.future()

@@ -11,7 +11,7 @@ struct SeedConferences: SQLiteMigration {
         Conference(name: "American Football Conference", abbreviation: "AFC"),
         Conference(name: "National Football Conference", abbreviation: "NFC")
       ]
-      return conferences.map {$0.save(on: c)}.flatten(on: c).transform(to:())
+      return conferences.map {$0.save(on: c)}.flatten(on: c).transform(to: Void())
     }
   }
 
