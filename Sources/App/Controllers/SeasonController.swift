@@ -8,6 +8,7 @@ final class SeasonController: RouteCollection {
     let seasonsRoute = router.grouped("seasons")
     seasonsRoute.get(use: index)
     seasonsRoute.get(Season.parameter, use: get)
+    seasonsRoute.get(Season.parameter, "weeks", use: getWeeks)
     seasonsRoute.post(Season.self, use: create)
   }
 
@@ -27,6 +28,13 @@ final class SeasonController: RouteCollection {
       let location = req.http.url.appendingPathComponent(season.id!.description, isDirectory: false)
       let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location.path))
       return HTTPResponse(status: .created, headers: responseHeaders)
+    }
+  }
+
+  /// Returns the list of `Week` entities within a `Season` entity
+  func getWeeks(_ req: Request) throws -> Future<[Week]> {
+    return try req.parameters.next(Season.self).flatMap(to: [Week].self) { season in
+      try season.weeks.query(on: req).all()
     }
   }
 }

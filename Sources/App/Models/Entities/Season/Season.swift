@@ -36,6 +36,16 @@ struct Season: Codable {
 }
 
 
+/// Extensions to the base season entity
+extension Season {
+
+  /// Returns the child weeks relationship
+  var weeks: Children<Season, Week> {
+    return children(\.seasonId)
+  }
+}
+
+
 extension Season: SQLiteUUIDModel {}
 
 extension Season: Content {}
