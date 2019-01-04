@@ -17,9 +17,9 @@ struct SeedAfcNorthTeams: SQLiteMigration {
               Team(name: "Cleveland Browns", abbreviation: "CLE", divisionId: did),
               Team(name: "Pittsburgh Steelers", abbreviation: "PIT", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -57,9 +57,9 @@ struct SeedAfcSouthTeams: SQLiteMigration {
               Team(name: "Jacksonville Jaguars", abbreviation: "JAX", divisionId: did),
               Team(name: "Tennessee Titans", abbreviation: "TEN", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -97,9 +97,9 @@ struct SeedAfcEastTeams: SQLiteMigration {
               Team(name: "New England Patriots", abbreviation: "NE", divisionId: did),
               Team(name: "New York Jets", abbreviation: "NYJ", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -137,9 +137,9 @@ struct SeedAfcWestTeams: SQLiteMigration {
               Team(name: "Los Angeles Chargers", abbreviation: "LAC", divisionId: did),
               Team(name: "Oakland Raiders", abbreviation: "OAK", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -177,9 +177,9 @@ struct SeedNfcNorthTeams: SQLiteMigration {
               Team(name: "Green Bay Packers", abbreviation: "GB", divisionId: did),
               Team(name: "Minnesota Vikings", abbreviation: "MIN", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -217,9 +217,9 @@ struct SeedNfcSouthTeams: SQLiteMigration {
               Team(name: "New Orleans Saints", abbreviation: "NO", divisionId: did),
               Team(name: "Tampa Bay Buccaneers", abbreviation: "TB", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -257,9 +257,9 @@ struct SeedNfcEastTeams: SQLiteMigration {
               Team(name: "Philadelphia Eagles", abbreviation: "PHI", divisionId: did),
               Team(name: "Washington Redskins", abbreviation: "WAS", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -297,9 +297,9 @@ struct SeedNfcWestTeams: SQLiteMigration {
               Team(name: "Seattle Seahawks", abbreviation: "SEA", divisionId: did),
               Team(name: "San Francisco 49ers", abbreviation: "SF", divisionId: did)
             ]
-            return teams.map { team in
-              team.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return teams.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()

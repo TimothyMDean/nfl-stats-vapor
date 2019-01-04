@@ -18,9 +18,9 @@ struct SeedAfcDivisions: SQLiteMigration {
               Division(name: "AFC East", conferenceId: cid),
               Division(name: "AFC West", conferenceId: cid)
             ]
-            return divisions.map { division in
-              division.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return divisions.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
@@ -59,9 +59,9 @@ struct SeedNfcDivisions: SQLiteMigration {
               Division(name: "NFC East", conferenceId: cid),
               Division(name: "NFC West", conferenceId: cid)
             ]
-            return divisions.map { division in
-              division.save(on: c)
-            }.flatten(on: c).transform(to: Void())
+            return divisions.map { $0.save(on: c) }
+              .flatten(on: c)
+              .transform(to: Void())
           }
         } else {
           return connection.future()
