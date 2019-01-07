@@ -29,6 +29,10 @@ extension Week {
     return parent(\.seasonId)
   }
 
+  /// Returns the child games relationship
+  var games: Children<Week, Game> {
+    return children(\.weekId)
+  }
 }
 
 
