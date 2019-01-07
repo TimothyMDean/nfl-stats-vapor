@@ -26,17 +26,14 @@ final class SeasonController: RouteCollection {
   func create(_ req: Request, season: Season) throws -> Future<HTTPResponse> {
     return req.transaction(on: .sqlite) { connection in
       return season.save(on: connection).flatMap(to: HTTPResponse.self) { season in
-        if let seasonId = season.id {
-          let location = req.http.url.appendingPathComponent(seasonId.description, isDirectory: false)
-          let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location.path))
-          return (1...17)
-            .map { Week(number:$0, seasonId: seasonId) }
-            .map { $0.save(on: connection) }
-            .flatten(on: connection)
-            .transform(to: HTTPResponse(status: .created, headers: responseHeaders))
-        } else {
-          return req.future(HTTPResponse(status: .internalServerError))
-        }
+        guard let seasonId = season.id else { throw Abort(.internalServerError, reason: "Missing season ID")}
+        let location = SeasonController.location(forId: seasonId)
+        let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location))
+        return (1...17)
+          .map { Week(number:$0, seasonId: seasonId) }
+          .map { $0.save(on: connection) }
+          .flatten(on: connection)
+          .transform(to: HTTPResponse(status: .created, headers: responseHeaders))
       }
     }
   }
@@ -46,5 +43,10 @@ final class SeasonController: RouteCollection {
     return try req.parameters.next(Season.self).flatMap(to: [Week].self) { season in
       try season.weeks.query(on: req).sort(\.number, .ascending).all()
     }
+  }
+
+  // Returns the location path that should be used for a `Season` with a specified ID
+  static func location(forId seasonId: Season.ID) -> String {
+    return "/seasons/" + seasonId.description
   }
 }
