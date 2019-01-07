@@ -7,4 +7,5 @@ public func routes(_ router: Router) throws {
     try router.register(collection: TeamController())
     try router.register(collection: SeasonController())
     try router.register(collection: WeekController())
+    try router.register(collection: GameController())
 }
