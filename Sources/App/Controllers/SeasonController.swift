@@ -27,7 +27,7 @@ final class SeasonController: RouteCollection {
     return req.transaction(on: .sqlite) { connection in
       return season.save(on: connection).flatMap(to: HTTPResponse.self) { season in
         if let seasonId = season.id {
-          let location = req.http.url.appendingPathComponent(season.id!.description, isDirectory: false)
+          let location = req.http.url.appendingPathComponent(seasonId.description, isDirectory: false)
           let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location.path))
           return (1...17)
             .map { Week(number:$0, seasonId: seasonId) }
