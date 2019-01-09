@@ -12,15 +12,15 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     services.register(router, as: Router.self)
 
     /// Register middleware
-    var middlewares = MiddlewareConfig() // Create _empty_ middleware config
-    middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
-    services.register(middlewares)
+    var middlewaresConfig = MiddlewareConfig()
+    try middlewares(config: &middlewaresConfig)
+    services.register(middlewaresConfig)
 
     /// Register the configured SQLite database to the database config.
     var databasesConfig = DatabasesConfig()
     try databases(config: &databasesConfig)
     services.register(databasesConfig)
-    
+
     /// Configure migrations
     var migrations = MigrationConfig()
     migrations.add(model: Conference.self, database: .sqlite)
