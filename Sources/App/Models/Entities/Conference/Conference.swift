@@ -1,14 +1,11 @@
 import Foundation
-import FluentSQLite
+import Fluent
 import Vapor
 
 /// An entity that describes an NFL conference
-struct Conference: Codable {
+struct Conference {
 
-  static var createdAtKey: TimestampKey? = \.createdAt
-  static var updatedAtKey: TimestampKey? = \.updatedAt
-
-  var id: UUID?
+  var id: Int?
   var name: String
   var abbreviation: String
   var createdAt: Date?
@@ -21,20 +18,20 @@ struct Conference: Codable {
   }
 }
 
-/// Extensions to the base conference entity
+/// Add support for automatic time-stamping of `Conference` entities
 extension Conference {
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+}
 
-  /// Returns the child divisions relationship
+/// Add methods to navigate `Conference` entity's relationships
+extension Conference {
   var divisions: Children<Conference, Division> {
     return children(\.conferenceId)
   }
 }
 
-
-extension Conference: SQLiteUUIDModel {}
-
+/// Miscellaneous extensions for Vapor marker protocols
 extension Conference: Content {}
-
 extension Conference: Parameter {}
-
 extension Conference: Migration {}
