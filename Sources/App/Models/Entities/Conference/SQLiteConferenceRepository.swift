@@ -1,6 +1,5 @@
 import Vapor
 import FluentSQLite
-import FluentPostgreSQL
 
 // An implementation of the `ConferenceRepository` protocol. using an
 // SQLite database as the backend persistence layer
