@@ -33,5 +33,4 @@ extension Conference {
 
 /// Miscellaneous extensions for Vapor marker protocols
 extension Conference: Content {}
-extension Conference: Parameter {}
 extension Conference: Migration {}
