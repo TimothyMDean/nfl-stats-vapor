@@ -1,14 +1,11 @@
 import Foundation
-import FluentSQLite
+import Fluent
 import Vapor
 
 /// An entity that describes an NFL division
-struct Division: Codable {
+struct Division {
 
-  static var createdAtKey: TimestampKey? = \.createdAt
-  static var updatedAtKey: TimestampKey? = \.updatedAt
-
-  var id: UUID?
+  var id: Int?
   var name: String
   var conferenceId: Conference.ID
   var createdAt: Date?
@@ -21,7 +18,13 @@ struct Division: Codable {
   }
 }
 
-/// Extension to the base division entity that adds relationship properties
+/// Add support for automatic time-stamping of `Division` entities
+extension Division {
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+}
+
+/// Add methods to navigate `Conference` entity's relationships
 extension Division {
 
   /// Returns the parent conference relationship
@@ -35,19 +38,5 @@ extension Division {
   }
 }
 
-// A custom migration for `Division` entities
-extension Division: Migration {
-
-  static func prepare(on connection: SQLiteConnection) -> Future<Void> {
-    return Database.create(self, on: connection) { builder in
-      try addProperties(to: builder)
-      builder.reference(from: \.conferenceId, to: \Conference.id)
-    }
-  }
-}
-
-extension Division: SQLiteUUIDModel {}
-
+/// Miscellaneous extensions for Vapor marker protocols
 extension Division: Content {}
-
-extension Division: Parameter {}

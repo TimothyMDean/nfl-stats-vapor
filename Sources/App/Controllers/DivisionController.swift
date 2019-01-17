@@ -3,13 +3,20 @@ import Vapor
 /// Controls basic CRUD operations on `Division`s.
 final class DivisionController: RouteCollection {
 
+  private let repository: DivisionRepository
+
+  /// Initialize a new `DivisionController`
+  init(repository: DivisionRepository) {
+    self.repository = repository
+  }
+
   /// Registers this controller's routes at boot time
   func boot(router: Router) throws {
     let divisionsRoute = router.grouped("divisions")
     divisionsRoute.get(use: index)
-    divisionsRoute.get(Division.parameter, use: get)
-    divisionsRoute.get(Division.parameter, "conference", use: getConference)
-    divisionsRoute.get(Division.parameter, "teams", use: getTeams)
+    divisionsRoute.get(Int.parameter, use: get)
+    divisionsRoute.get(Int.parameter, "conference", use: getConference)
+    divisionsRoute.get(Int.parameter, "teams", use: getTeams)
   }
 
   /// Returns a list of all `Division`s.
@@ -19,20 +26,28 @@ final class DivisionController: RouteCollection {
 
   /// Returns a specific `Division`
   func get(_ req: Request) throws -> Future<Division> {
-    return try req.parameters.next(Division.self)
+    let divisionId = try req.parameters.next(Int.self)
+    return self.repository.find(id: divisionId)
+      .unwrap(or: Abort(.notFound, reason: "Invalid division ID"))
   }
 
   /// Returns the `Conference` for a `Division`
   func getConference(_ req: Request) throws -> Future<Conference> {
-    return try req.parameters.next(Division.self).flatMap { division in
-      division.conference.get(on: req)
-    }
+    let divisionId = try req.parameters.next(Int.self)
+    return self.repository.find(id: divisionId)
+      .unwrap(or: Abort(.notFound, reason: "Invalid division ID"))
+      .flatMap { division in
+        division.conference.get(on: req)
+      }
   }
 
   /// Returns the `Team` children of a specific `Division`
   func getTeams(_ req: Request) throws -> Future<[Team]> {
-    return try req.parameters.next(Division.self).flatMap(to: [Team].self) { division in
-      try division.teams.query(on: req).all()
-    }
+    let divisionId = try req.parameters.next(Int.self)
+    return self.repository.find(id: divisionId)
+      .unwrap(or: Abort(.notFound, reason: "Invalid division ID"))
+      .flatMap { division in
+        try division.teams.query(on: req).all()
+      }
   }
 }

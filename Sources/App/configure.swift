@@ -8,6 +8,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     try services.register(FluentSQLiteProvider())
 
     services.register(SQLiteConferenceRepository.self)
+    services.register(SQLiteDivisionRepository.self)
 
     /// Register routes to the router
     services.register(Router.self) { container -> EngineRouter in
