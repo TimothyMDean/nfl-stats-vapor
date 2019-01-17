@@ -33,4 +33,3 @@ extension Conference {
 
 /// Miscellaneous extensions for Vapor marker protocols
 extension Conference: Content {}
-extension Conference: Migration {}
