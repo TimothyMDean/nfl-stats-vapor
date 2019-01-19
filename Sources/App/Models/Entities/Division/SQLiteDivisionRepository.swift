@@ -13,7 +13,7 @@ struct SQLiteDivisionRepository: DivisionRepository {
   }
 
   // Retrieves a `Division` with a specified ID, implemented using a SQLite database
-  func find(id: Int) -> Future<Division?> {
+  func find(id: UUID) -> Future<Division?> {
     return db.withConnection { connection in
       return Division.find(id, on: connection)
     }
@@ -47,4 +47,4 @@ extension SQLiteDivisionRepository {
 
 
 // Adds SQLite support to the `Division` model
-extension Division: SQLiteModel {}
+extension Division: SQLiteUUIDModel {}

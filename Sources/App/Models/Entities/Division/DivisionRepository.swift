@@ -4,7 +4,7 @@ import Vapor
 protocol DivisionRepository: ServiceType {
 
   // Retrieves a `Division` with a specified ID
-  func find(id: Int) -> Future<Division?>
+  func find(id: UUID) -> Future<Division?>
 
   // Retrieves all `Division` entites for a conference ID
   func find(conferenceId: UUID) -> Future<[Division]>

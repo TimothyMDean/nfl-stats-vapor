@@ -14,9 +14,9 @@ final class DivisionController: RouteCollection {
   func boot(router: Router) throws {
     let divisionsRoute = router.grouped("divisions")
     divisionsRoute.get(use: index)
-    divisionsRoute.get(Int.parameter, use: get)
-    divisionsRoute.get(Int.parameter, "conference", use: getConference)
-    divisionsRoute.get(Int.parameter, "teams", use: getTeams)
+    divisionsRoute.get(UUID.parameter, use: get)
+    divisionsRoute.get(UUID.parameter, "conference", use: getConference)
+    divisionsRoute.get(UUID.parameter, "teams", use: getTeams)
   }
 
   /// Returns a list of all `Division`s.
@@ -26,14 +26,14 @@ final class DivisionController: RouteCollection {
 
   /// Returns a specific `Division`
   func get(_ req: Request) throws -> Future<Division> {
-    let divisionId = try req.parameters.next(Int.self)
+    let divisionId = try req.parameters.next(UUID.self)
     return self.repository.find(id: divisionId)
       .unwrap(or: Abort(.notFound, reason: "Invalid division ID"))
   }
 
   /// Returns the `Conference` for a `Division`
   func getConference(_ req: Request) throws -> Future<Conference> {
-    let divisionId = try req.parameters.next(Int.self)
+    let divisionId = try req.parameters.next(UUID.self)
     return self.repository.find(id: divisionId)
       .unwrap(or: Abort(.notFound, reason: "Invalid division ID"))
       .flatMap { division in
@@ -43,7 +43,7 @@ final class DivisionController: RouteCollection {
 
   /// Returns the `Team` children of a specific `Division`
   func getTeams(_ req: Request) throws -> Future<[Team]> {
-    let divisionId = try req.parameters.next(Int.self)
+    let divisionId = try req.parameters.next(UUID.self)
     return self.repository.find(id: divisionId)
       .unwrap(or: Abort(.notFound, reason: "Invalid division ID"))
       .flatMap { division in

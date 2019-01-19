@@ -1,11 +1,10 @@
-import Foundation
 import Fluent
 import Vapor
 
 /// An entity that describes an NFL division
 struct Division {
 
-  var id: Int?
+  var id: UUID?
   var name: String
   var conferenceId: Conference.ID
   var createdAt: Date?
