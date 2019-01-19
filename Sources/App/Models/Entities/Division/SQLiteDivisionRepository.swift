@@ -20,7 +20,7 @@ struct SQLiteDivisionRepository: DivisionRepository {
   }
 
   // Retrieves all `Division` entites for a conference ID
-  func find(conferenceId: Int) -> Future<[Division]> {
+  func find(conferenceId: UUID) -> Future<[Division]> {
     return db.withConnection { connection in
       return Division.query(on: connection).filter(\.conferenceId == conferenceId).all()
     }

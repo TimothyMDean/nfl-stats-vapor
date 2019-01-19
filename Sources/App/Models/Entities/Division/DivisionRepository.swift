@@ -7,7 +7,7 @@ protocol DivisionRepository: ServiceType {
   func find(id: Int) -> Future<Division?>
 
   // Retrieves all `Division` entites for a conference ID
-  func find(conferenceId: Int) -> Future<[Division]>
+  func find(conferenceId: UUID) -> Future<[Division]>
 
   // Retrieves all `Division` entities
   func all() -> Future<[Division]>

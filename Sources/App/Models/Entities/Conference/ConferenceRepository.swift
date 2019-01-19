@@ -4,7 +4,7 @@ import Vapor
 protocol ConferenceRepository: ServiceType {
 
   // Retrieves a `Conference` with a specified ID
-  func find(id: Int) -> Future<Conference?>
+  func find(id: UUID) -> Future<Conference?>
 
   // Retrieves all `Conference` entities
   func all() -> Future<[Conference]>

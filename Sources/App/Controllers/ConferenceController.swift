@@ -14,8 +14,8 @@ final class ConferenceController: RouteCollection {
   func boot(router: Router) throws {
     let conferencesRoute = router.grouped("conferences")
     conferencesRoute.get(use: index)
-    conferencesRoute.get(Int.parameter, use: get)
-    conferencesRoute.get(Int.parameter, "divisions", use: getDivisions)
+    conferencesRoute.get(UUID.parameter, use: get)
+    conferencesRoute.get(UUID.parameter, "divisions", use: getDivisions)
   }
 
   /// Returns a list of all `Conference`s.
@@ -25,14 +25,14 @@ final class ConferenceController: RouteCollection {
 
   /// Returns a specific `Conference`
   func get(_ req: Request) throws -> Future<Conference> {
-    let conferenceId = try req.parameters.next(Int.self)
+    let conferenceId = try req.parameters.next(UUID.self)
     return self.repository.find(id: conferenceId)
       .unwrap(or: Abort(.notFound, reason: "Invalid conference ID"))
   }
 
   /// Returns the `Division` children of a specific `Conference`
   func getDivisions(_ req: Request) throws -> Future<[Division]> {
-    let conferenceId = try req.parameters.next(Int.self)
+    let conferenceId = try req.parameters.next(UUID.self)
     return self.repository.find(id: conferenceId)
       .unwrap(or: Abort(.notFound, reason: "Invalid conference ID"))
       .flatMap(to: [Division].self) { conference in

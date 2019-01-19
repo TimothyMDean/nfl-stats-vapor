@@ -13,7 +13,7 @@ struct SQLiteConferenceRepository: ConferenceRepository {
   }
 
   // Retrieves a `Conference` with a specified ID, implemented using a SQLite database
-  func find(id: Int) -> Future<Conference?> {
+  func find(id: UUID) -> Future<Conference?> {
     return db.withConnection { connection in
       return Conference.find(id, on: connection)
     }
@@ -40,4 +40,4 @@ extension SQLiteConferenceRepository {
 
 
 // Adds SQLite support to the `Conference` model
-extension Conference: SQLiteModel {}
+extension Conference: SQLiteUUIDModel {}
