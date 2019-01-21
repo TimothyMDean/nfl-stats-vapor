@@ -1,6 +1,16 @@
 import FluentSQLite
 import Vapor
 
+// Extends the `Team` model to implement its schema migration
+extension Team: Migration {
+  static func prepare(on connection: SQLiteConnection) -> Future<Void> {
+    return Database.create(self, on: connection) { builder in
+      try addProperties(to: builder)
+      builder.reference(from: \.divisionId, to: \Division.id)
+    }
+  }
+}
+
 // A Fluent migration that seeds the Team model with AFC North values
 struct SeedAfcNorthTeams: SQLiteMigration {
 
@@ -9,13 +19,13 @@ struct SeedAfcNorthTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "AFC North")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Baltimore Ravens", abbreviation: "BAL", divisionId: did),
-              Team(name: "Cincinnati Bengals", abbreviation: "CIN", divisionId: did),
-              Team(name: "Cleveland Browns", abbreviation: "CLE", divisionId: did),
-              Team(name: "Pittsburgh Steelers", abbreviation: "PIT", divisionId: did)
+              Team(name: "Baltimore Ravens", abbreviation: "BAL", conferenceId: cid, divisionId: did),
+              Team(name: "Cincinnati Bengals", abbreviation: "CIN", conferenceId: cid, divisionId: did),
+              Team(name: "Cleveland Browns", abbreviation: "CLE", conferenceId: cid, divisionId: did),
+              Team(name: "Pittsburgh Steelers", abbreviation: "PIT", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -49,13 +59,13 @@ struct SeedAfcSouthTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "AFC South")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Houston Texans", abbreviation: "HOU", divisionId: did),
-              Team(name: "Indianapolis Colts", abbreviation: "IND", divisionId: did),
-              Team(name: "Jacksonville Jaguars", abbreviation: "JAX", divisionId: did),
-              Team(name: "Tennessee Titans", abbreviation: "TEN", divisionId: did)
+              Team(name: "Houston Texans", abbreviation: "HOU", conferenceId: cid, divisionId: did),
+              Team(name: "Indianapolis Colts", abbreviation: "IND", conferenceId: cid, divisionId: did),
+              Team(name: "Jacksonville Jaguars", abbreviation: "JAX", conferenceId: cid, divisionId: did),
+              Team(name: "Tennessee Titans", abbreviation: "TEN", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -89,13 +99,13 @@ struct SeedAfcEastTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "AFC East")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Buffalo Bills", abbreviation: "BUF", divisionId: did),
-              Team(name: "Miami Dolphins", abbreviation: "MIA", divisionId: did),
-              Team(name: "New England Patriots", abbreviation: "NE", divisionId: did),
-              Team(name: "New York Jets", abbreviation: "NYJ", divisionId: did)
+              Team(name: "Buffalo Bills", abbreviation: "BUF", conferenceId: cid, divisionId: did),
+              Team(name: "Miami Dolphins", abbreviation: "MIA", conferenceId: cid, divisionId: did),
+              Team(name: "New England Patriots", abbreviation: "NE", conferenceId: cid, divisionId: did),
+              Team(name: "New York Jets", abbreviation: "NYJ", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -129,13 +139,13 @@ struct SeedAfcWestTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "AFC West")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Denver Broncos", abbreviation: "DEN", divisionId: did),
-              Team(name: "Kansas City Chiefs", abbreviation: "KC", divisionId: did),
-              Team(name: "Los Angeles Chargers", abbreviation: "LAC", divisionId: did),
-              Team(name: "Oakland Raiders", abbreviation: "OAK", divisionId: did)
+              Team(name: "Denver Broncos", abbreviation: "DEN", conferenceId: cid, divisionId: did),
+              Team(name: "Kansas City Chiefs", abbreviation: "KC", conferenceId: cid, divisionId: did),
+              Team(name: "Los Angeles Chargers", abbreviation: "LAC", conferenceId: cid, divisionId: did),
+              Team(name: "Oakland Raiders", abbreviation: "OAK", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -169,13 +179,13 @@ struct SeedNfcNorthTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "NFC North")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Chicago Bears", abbreviation: "CHI", divisionId: did),
-              Team(name: "Detroit Lions", abbreviation: "DET", divisionId: did),
-              Team(name: "Green Bay Packers", abbreviation: "GB", divisionId: did),
-              Team(name: "Minnesota Vikings", abbreviation: "MIN", divisionId: did)
+              Team(name: "Chicago Bears", abbreviation: "CHI", conferenceId: cid, divisionId: did),
+              Team(name: "Detroit Lions", abbreviation: "DET", conferenceId: cid, divisionId: did),
+              Team(name: "Green Bay Packers", abbreviation: "GB", conferenceId: cid, divisionId: did),
+              Team(name: "Minnesota Vikings", abbreviation: "MIN", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -209,13 +219,13 @@ struct SeedNfcSouthTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "NFC South")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Atlanta Falcons", abbreviation: "ATL", divisionId: did),
-              Team(name: "Carolina Panthers", abbreviation: "CAR", divisionId: did),
-              Team(name: "New Orleans Saints", abbreviation: "NO", divisionId: did),
-              Team(name: "Tampa Bay Buccaneers", abbreviation: "TB", divisionId: did)
+              Team(name: "Atlanta Falcons", abbreviation: "ATL", conferenceId: cid, divisionId: did),
+              Team(name: "Carolina Panthers", abbreviation: "CAR", conferenceId: cid, divisionId: did),
+              Team(name: "New Orleans Saints", abbreviation: "NO", conferenceId: cid, divisionId: did),
+              Team(name: "Tampa Bay Buccaneers", abbreviation: "TB", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -249,13 +259,13 @@ struct SeedNfcEastTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "NFC East")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Dallas Cowboys", abbreviation: "DAL", divisionId: did),
-              Team(name: "New York Giants", abbreviation: "NYG", divisionId: did),
-              Team(name: "Philadelphia Eagles", abbreviation: "PHI", divisionId: did),
-              Team(name: "Washington Redskins", abbreviation: "WAS", divisionId: did)
+              Team(name: "Dallas Cowboys", abbreviation: "DAL", conferenceId: cid, divisionId: did),
+              Team(name: "New York Giants", abbreviation: "NYG", conferenceId: cid, divisionId: did),
+              Team(name: "Philadelphia Eagles", abbreviation: "PHI", conferenceId: cid, divisionId: did),
+              Team(name: "Washington Redskins", abbreviation: "WAS", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
@@ -289,13 +299,13 @@ struct SeedNfcWestTeams: SQLiteMigration {
     return Division.query(on: connection).filter(\.name == "NFC West")
       .first()
       .flatMap(to: Void.self) { division in
-        if let did = division?.id {
+        if let did = division?.id, let cid = division?.conferenceId {
           return connection.transaction(on: .sqlite) { c in
             let teams = [
-              Team(name: "Arizona Cardinals", abbreviation: "ARI", divisionId: did),
-              Team(name: "Los Angeles Rams", abbreviation: "LAR", divisionId: did),
-              Team(name: "Seattle Seahawks", abbreviation: "SEA", divisionId: did),
-              Team(name: "San Francisco 49ers", abbreviation: "SF", divisionId: did)
+              Team(name: "Arizona Cardinals", abbreviation: "ARI", conferenceId: cid, divisionId: did),
+              Team(name: "Los Angeles Rams", abbreviation: "LAR", conferenceId: cid, divisionId: did),
+              Team(name: "Seattle Seahawks", abbreviation: "SEA", conferenceId: cid, divisionId: did),
+              Team(name: "San Francisco 49ers", abbreviation: "SF", conferenceId: cid, divisionId: did)
             ]
             return teams.map { $0.save(on: c) }
               .flatten(on: c)
