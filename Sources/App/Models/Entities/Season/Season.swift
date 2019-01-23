@@ -1,12 +1,8 @@
-import Foundation
-import FluentSQLite
+import Fluent
 import Vapor
 
 /// An entity that describes an NFL season
-struct Season: Codable {
-
-  static var createdAtKey: TimestampKey? = \.createdAt
-  static var updatedAtKey: TimestampKey? = \.updatedAt
+struct Season {
 
   var id: UUID?
   var primaryYear: Int
@@ -38,20 +34,18 @@ struct Season: Codable {
 }
 
 
-/// Extensions to the base season entity
+/// Add support for automatic time-stamping of `Season` entities
 extension Season {
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+}
 
-  /// Returns the child weeks relationship
+/// Add methods to navigate `Season` entity's relationships
+extension Season {
   var weeks: Children<Season, Week> {
     return children(\.seasonId)
   }
 }
 
-
-extension Season: SQLiteUUIDModel {}
-
+/// Miscellaneous extensions for Vapor marker protocols
 extension Season: Content {}
-
-extension Season: Parameter {}
-
-extension Season: Migration {}

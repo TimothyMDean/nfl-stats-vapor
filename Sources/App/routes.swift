@@ -12,7 +12,9 @@ public func routes(_ router: Router, _ container: Container) throws {
   let teamRepository = try container.make(TeamRepository.self)
   try router.register(collection: TeamController(repository: teamRepository))
 
-  try router.register(collection: SeasonController())
+  let seasonRepository = try container.make(SeasonRepository.self)
+  try router.register(collection: SeasonController(repository: seasonRepository))
+  
   try router.register(collection: WeekController())
   try router.register(collection: GameController())
 }
