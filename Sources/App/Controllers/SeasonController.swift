@@ -3,11 +3,13 @@ import Vapor
 /// Controls basic CRUD operations on `Season`s.
 final class SeasonController: RouteCollection {
 
-  private let repository: SeasonRepository
+  private let seasonRepository: SeasonRepository
+  private let weekRepository: WeekRepository
 
   /// Initialize a new `SeasonController`
-  init(repository: SeasonRepository) {
-    self.repository = repository
+  init(seasonRepository: SeasonRepository, weekRepository: WeekRepository) {
+    self.seasonRepository = seasonRepository
+    self.weekRepository = weekRepository
   }
 
   /// Registers this controxller's routes at boot time
@@ -21,26 +23,26 @@ final class SeasonController: RouteCollection {
 
   /// Returns a list of all `Season`s.
   func index(_ req: Request) throws -> Future<[Season]> {
-    return self.repository.all()
+    return self.seasonRepository.all()
   }
 
   /// Returns a specific `Season`
   func get(_ req: Request) throws -> Future<Season> {
     let seasonId = try req.parameters.next(UUID.self)
-    return self.repository.find(id: seasonId)
+    return self.seasonRepository.find(id: seasonId)
       .unwrap(or: Abort(.notFound, reason: "Invalid season ID"))
   }
 
   /// Creates a new `Season` and returns its URL in the `Location` header
   func create(_ req: Request, season: Season) throws -> Future<HTTPResponse> {
     return req.transaction(on: .sqlite) { connection in
-      return self.repository.save(season: season).flatMap(to: HTTPResponse.self) { season in
+      return self.seasonRepository.save(season: season).flatMap(to: HTTPResponse.self) { season in
         guard let seasonId = season.id else { throw Abort(.internalServerError, reason: "Missing season ID")}
         let location = SeasonController.location(forId: seasonId)
         let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location))
         return (1...17)
-          .map { Week(number:$0, seasonId: seasonId) }
-          .map { $0.save(on: connection) }
+          .map { Week(number: $0, seasonId: seasonId) }
+          .map { self.weekRepository.save(week: $0) }
           .flatten(on: connection)
           .transform(to: HTTPResponse(status: .created, headers: responseHeaders))
       }
@@ -50,7 +52,7 @@ final class SeasonController: RouteCollection {
   /// Returns the list of `Week` entities within a `Season` entity
   func getWeeks(_ req: Request) throws -> Future<[Week]> {
     let seasonId = try req.parameters.next(UUID.self)
-    return self.repository.find(id: seasonId)
+    return self.seasonRepository.find(id: seasonId)
       .unwrap(or: Abort(.notFound, reason: "Invalid season ID"))
       .flatMap(to: [Week].self) { season in
         try season.weeks.query(on: req).all()

@@ -4,17 +4,22 @@ import Vapor
 public func routes(_ router: Router, _ container: Container) throws {
 
   let conferenceRepository = try container.make(ConferenceRepository.self)
-  try router.register(collection: ConferenceController(repository: conferenceRepository))
-
   let divisionRepository = try container.make(DivisionRepository.self)
-  try router.register(collection: DivisionController(repository: divisionRepository))
-
   let teamRepository = try container.make(TeamRepository.self)
-  try router.register(collection: TeamController(repository: teamRepository))
-
   let seasonRepository = try container.make(SeasonRepository.self)
-  try router.register(collection: SeasonController(repository: seasonRepository))
-  
-  try router.register(collection: WeekController())
+  let weekRepository = try container.make(WeekRepository.self)
+
+  let conferences = ConferenceController(repository: conferenceRepository)
+  let divisions = DivisionController(repository: divisionRepository)
+  let teams = TeamController(repository: teamRepository)
+  let seasons = SeasonController(seasonRepository: seasonRepository, weekRepository: weekRepository)
+  let weeks = WeekController(repository: weekRepository)
+
+  try router.register(collection: conferences)
+  try router.register(collection: divisions)
+  try router.register(collection: teams)
+  try router.register(collection: seasons)
+  try router.register(collection: weeks)
+
   try router.register(collection: GameController())
 }

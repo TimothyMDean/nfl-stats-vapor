@@ -1,12 +1,8 @@
-import Foundation
-import FluentSQLite
+import Fluent
 import Vapor
 
 /// An entity that describes a week in an NFL season
 struct Week: Codable {
-
-  static var createdAtKey: TimestampKey? = \.createdAt
-  static var updatedAtKey: TimestampKey? = \.updatedAt
 
   var id: UUID?
   var number: Int
@@ -21,7 +17,13 @@ struct Week: Codable {
   }
 }
 
-/// Extension to the base week entity that adds relationship properties
+/// Add support for automatic time-stamping of `Week` entities
+extension Week {
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+}
+
+/// Add methods to navigate `Week` entity's relationships
 extension Week {
 
   /// Returns the parent season relationship
@@ -35,11 +37,5 @@ extension Week {
   }
 }
 
-
-extension Week: SQLiteUUIDModel {}
-
+/// Miscellaneous extensions for Vapor marker protocols
 extension Week: Content {}
-
-extension Week: Parameter {}
-
-extension Week: Migration {}
