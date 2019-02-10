@@ -12,6 +12,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     services.register(SQLiteTeamRepository.self)
     services.register(SQLiteSeasonRepository.self)
     services.register(SQLiteWeekRepository.self)
+    services.register(SQLiteGameRepository.self)
 
     /// Register routes to the router
     services.register(Router.self) { container -> EngineRouter in

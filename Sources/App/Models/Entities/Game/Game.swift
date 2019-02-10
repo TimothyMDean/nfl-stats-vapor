@@ -1,12 +1,8 @@
-import Foundation
-import FluentSQLite
+import Fluent
 import Vapor
 
 /// An entity that describes a single NFL game
-struct Game: Codable {
-
-  static var createdAtKey: TimestampKey? = \.createdAt
-  static var updatedAtKey: TimestampKey? = \.updatedAt
+struct Game {
 
   var id: UUID?
   var scheduledTime: Date
@@ -25,7 +21,15 @@ struct Game: Codable {
   }
 }
 
-/// Extension to the base game entity that adds relationship properties
+
+/// Add support for automatic time-stamping of `Game` entities
+extension Game {
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+}
+
+
+/// Add methods to navigate `Game` entity's relationships
 extension Game {
 
   /// Returns the parent week relationship
@@ -45,10 +49,5 @@ extension Game {
 }
 
 
-extension Game: SQLiteUUIDModel {}
-
+/// Miscellaneous extensions for Vapor marker protocols
 extension Game: Content {}
-
-extension Game: Parameter {}
-
-extension Game: Migration {}
