@@ -13,7 +13,13 @@ final class GameController: RouteCollection {
   /// Registers this controxller's routes at boot time
   func boot(router: Router) throws {
     let gamesRoute = router.grouped("games")
+    gamesRoute.get(use: index)
     gamesRoute.get(UUID.parameter, use: get)
+  }
+
+  /// Returns a list of all `Game`s.
+  func index(_ req: Request) throws -> Future<[Game]> {
+    return self.repository.all()
   }
 
   /// Returns a specific `Game`
