@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "nfl-stats-vapor",
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "3.1.1"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.3.0"),
         .package(url: "https://github.com/vapor/fluent-sqlite.git", from: "3.0.0")
     ],
     targets: [
