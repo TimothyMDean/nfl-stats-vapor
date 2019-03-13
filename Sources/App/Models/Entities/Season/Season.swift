@@ -45,6 +45,9 @@ extension Season {
   var weeks: Children<Season, Week> {
     return children(\.seasonId)
   }
+  var games: Children<Season, Game> {
+    return children(\.seasonId)
+  }
 }
 
 /// Miscellaneous extensions for Vapor marker protocols

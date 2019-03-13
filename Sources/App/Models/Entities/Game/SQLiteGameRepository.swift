@@ -26,6 +26,13 @@ struct SQLiteGameRepository: GameRepository {
     }
   }
 
+  /// Retrieves all `Game` entites for a season ID
+  func find(seasonId: UUID) -> Future<[Game]> {
+    return db.withConnection { connection in
+      return Game.query(on: connection).filter(\.seasonId == seasonId).all()
+    }
+  }
+
   /// Retrieves all `Game` entities
   func all() -> Future<[Game]> {
     return db.withConnection { conn in

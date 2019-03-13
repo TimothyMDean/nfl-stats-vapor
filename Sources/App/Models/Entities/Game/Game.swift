@@ -9,15 +9,17 @@ struct Game {
   var homeTeamId: Team.ID
   var awayTeamId: Team.ID
   var weekId: Week.ID
+  var seasonId: Season.ID
   var createdAt: Date?
   var updatedAt: Date?
 
   /// Creates a new `Game` entity
-  init(scheduledTime: Date, homeTeamId: Team.ID, awayTeamId: Team.ID, weekId: Week.ID) {
+  init(scheduledTime: Date, homeTeamId: Team.ID, awayTeamId: Team.ID, weekId: Week.ID, seasonId: Season.ID) {
     self.scheduledTime = scheduledTime
     self.homeTeamId = homeTeamId
     self.awayTeamId = awayTeamId
     self.weekId = weekId
+    self.seasonId = seasonId
   }
 }
 
@@ -35,6 +37,11 @@ extension Game {
   /// Returns the parent week relationship
   var week: Parent<Game, Week> {
     return parent(\.weekId)
+  }
+
+  /// Returns the parent season relationship
+  var season: Parent<Game, Season> {
+    return parent(\.seasonId)
   }
 
   /// Returns the home team relationship

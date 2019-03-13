@@ -18,6 +18,7 @@ final class SeasonController: RouteCollection {
     seasonsRoute.get(use: index)
     seasonsRoute.get(UUID.parameter, use: get)
     seasonsRoute.get(UUID.parameter, "weeks", use: getWeeks)
+    seasonsRoute.get(UUID.parameter, "games", use: getGames)
     seasonsRoute.post(Season.self, use: create)
   }
 
@@ -56,6 +57,16 @@ final class SeasonController: RouteCollection {
       .unwrap(or: Abort(.notFound, reason: "Invalid season ID"))
       .flatMap(to: [Week].self) { season in
         try season.weeks.query(on: req).all()
+      }
+  }
+
+  /// Returns the list of `Game` entities within a `Season` entity
+  func getGames(_ req: Request) throws -> Future<[Game]> {
+    let seasonId = try req.parameters.next(UUID.self)
+    return self.seasonRepository.find(id: seasonId)
+      .unwrap(or: Abort(.notFound, reason: "Invalid season ID"))
+      .flatMap(to: [Game].self) { season in
+        try season.games.query(on: req).all()
       }
   }
 

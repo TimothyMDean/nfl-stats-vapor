@@ -58,12 +58,14 @@ final class WeekController: RouteCollection {
   func createGame(_ req: Request, gameRequest: CreateGameRequest) throws -> Future<HTTPResponse> {
     let weekId = try req.parameters.next(UUID.self)
     return self.repository.find(id: weekId)
+      .unwrap(or: Abort(.notFound, reason: "Invalid week ID"))
       .flatMap(to: HTTPResponse.self) { week in
         let newGame = Game(
           scheduledTime: gameRequest.scheduledTime,
           homeTeamId: gameRequest.homeTeamId,
-          awayTeamId: gameRequest.homeTeamId,
-          weekId: weekId)
+          awayTeamId: gameRequest.awayTeamId,
+          weekId: weekId,
+          seasonId: week.seasonId)
         return newGame.save(on: req).map(to: HTTPResponse.self) { game in
           guard let gameId = game.id else { throw Abort(.internalServerError, reason: "Missing game ID") }
           let location = GameController.location(forId: gameId)
