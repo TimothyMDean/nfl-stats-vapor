@@ -22,6 +22,12 @@ struct Team : Codable {
   }
 }
 
+/// Add support for automatic time–stamping of `Team` entities
+extension Team {
+  static var createdAtKey: TimestampKey? = \.createdAt
+  static var updatedAtKey: TimestampKey? = \.updatedAt
+}
+
 /// Add methods to navigate `Team` entity’s relationships
 extension Team {
 
