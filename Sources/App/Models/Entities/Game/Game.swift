@@ -24,7 +24,7 @@ struct Game {
 }
 
 
-/// Add support for automatic time-stamping of `Game` entities
+/// Add support for automatic time–stamping of `Game` entities
 extension Game {
   static var createdAtKey: TimestampKey? = \.createdAt
   static var updatedAtKey: TimestampKey? = \.updatedAt

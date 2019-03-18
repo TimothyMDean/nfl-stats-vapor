@@ -17,7 +17,7 @@ struct Conference {
   }
 }
 
-/// Add support for automatic time-stamping of `Conference` entities
+/// Add support for automatic time–stamping of `Conference` entities
 extension Conference {
   static var createdAtKey: TimestampKey? = \.createdAt
   static var updatedAtKey: TimestampKey? = \.updatedAt

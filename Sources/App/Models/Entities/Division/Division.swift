@@ -17,7 +17,7 @@ struct Division {
   }
 }
 
-/// Add support for automatic time-stamping of `Division` entities
+/// Add support for automatic time–stamping of `Division` entities
 extension Division {
   static var createdAtKey: TimestampKey? = \.createdAt
   static var updatedAtKey: TimestampKey? = \.updatedAt

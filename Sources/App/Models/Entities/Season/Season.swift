@@ -34,7 +34,7 @@ struct Season {
 }
 
 
-/// Add support for automatic time-stamping of `Season` entities
+/// Add support for automatic time–stamping of `Season` entities
 extension Season {
   static var createdAtKey: TimestampKey? = \.createdAt
   static var updatedAtKey: TimestampKey? = \.updatedAt

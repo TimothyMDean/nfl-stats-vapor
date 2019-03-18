@@ -17,7 +17,7 @@ struct Week : Codable {
   }
 }
 
-/// Add support for automatic time-stamping of `Week` entities
+/// Add support for automatic time–stamping of `Week` entities
 extension Week {
   static var createdAtKey: TimestampKey? = \.createdAt
   static var updatedAtKey: TimestampKey? = \.updatedAt
