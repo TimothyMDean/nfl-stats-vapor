@@ -23,7 +23,7 @@ extension Week {
   static var updatedAtKey: TimestampKey? = \.updatedAt
 }
 
-/// Add methods to navigate `Week` entity's relationships
+/// Add methods to navigate `Week` entity’s relationships
 extension Week {
 
   /// Returns the parent season relationship

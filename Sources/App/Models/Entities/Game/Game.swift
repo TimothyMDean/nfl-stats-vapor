@@ -31,7 +31,7 @@ extension Game {
 }
 
 
-/// Add methods to navigate `Game` entity's relationships
+/// Add methods to navigate `Game` entity’s relationships
 extension Game {
 
   /// Returns the parent week relationship

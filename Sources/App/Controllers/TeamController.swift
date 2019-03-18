@@ -10,7 +10,7 @@ final class TeamController : RouteCollection {
     self.repository = repository
   }
 
-  /// Registers this controller's routes at boot time
+  /// Registers this controller’s routes at boot time
   func boot(router: Router) throws {
     let teamsRoute = router.grouped("teams")
     teamsRoute.get(use: index)

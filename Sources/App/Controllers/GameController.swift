@@ -10,7 +10,7 @@ final class GameController : RouteCollection {
     self.repository = repository
   }
 
-  /// Registers this controxller's routes at boot time
+  /// Registers this controller’s routes at boot time
   func boot(router: Router) throws {
     let gamesRoute = router.grouped("games")
     gamesRoute.get(use: index)

@@ -12,7 +12,7 @@ final class SeasonController : RouteCollection {
     self.weekRepository = weekRepository
   }
 
-  /// Registers this controxller's routes at boot time
+  /// Registers this controller’s routes at boot time
   func boot(router: Router) throws {
     let seasonsRoute = router.grouped("seasons")
     seasonsRoute.get(use: index)

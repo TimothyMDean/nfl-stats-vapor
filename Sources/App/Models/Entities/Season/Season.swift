@@ -40,7 +40,7 @@ extension Season {
   static var updatedAtKey: TimestampKey? = \.updatedAt
 }
 
-/// Add methods to navigate `Season` entity's relationships
+/// Add methods to navigate `Season` entity’s relationships
 extension Season {
   var weeks: Children<Season, Week> {
     return children(\.seasonId)

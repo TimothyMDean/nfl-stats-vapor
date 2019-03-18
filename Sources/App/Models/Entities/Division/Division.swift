@@ -23,7 +23,7 @@ extension Division {
   static var updatedAtKey: TimestampKey? = \.updatedAt
 }
 
-/// Add methods to navigate `Conference` entity's relationships
+/// Add methods to navigate `Conference` entity’s relationships
 extension Division {
 
   /// Returns the parent conference relationship

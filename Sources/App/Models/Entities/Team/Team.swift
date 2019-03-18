@@ -22,7 +22,7 @@ struct Team : Codable {
   }
 }
 
-/// Extensions to the base team entity
+/// Add methods to navigate `Team` entity’s relationships
 extension Team {
 
   /// Returns the parent division relationship

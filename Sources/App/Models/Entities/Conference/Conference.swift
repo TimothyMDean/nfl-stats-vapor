@@ -23,7 +23,7 @@ extension Conference {
   static var updatedAtKey: TimestampKey? = \.updatedAt
 }
 
-/// Add methods to navigate `Conference` entity's relationships
+/// Add methods to navigate `Conference` entity’s relationships
 extension Conference {
   var divisions: Children<Conference, Division> {
     return children(\.conferenceId)

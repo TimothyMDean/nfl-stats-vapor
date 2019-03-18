@@ -1,6 +1,6 @@
 import Vapor
 
-/// Register your application's routes here.
+/// Register your application’s routes here.
 public func routes(_ router: Router, _ container: Container) throws {
 
   let conferenceRepository = try container.make(ConferenceRepository.self)

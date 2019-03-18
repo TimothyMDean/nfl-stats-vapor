@@ -10,7 +10,7 @@ final class DivisionController : RouteCollection {
     self.repository = repository
   }
 
-  /// Registers this controller's routes at boot time
+  /// Registers this controller’s routes at boot time
   func boot(router: Router) throws {
     let divisionsRoute = router.grouped("divisions")
     divisionsRoute.get(use: index)

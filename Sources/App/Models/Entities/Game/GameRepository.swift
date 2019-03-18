@@ -9,7 +9,7 @@ protocol GameRepository : ServiceType {
   /// Retrieves all `Game` entities for a week ID
   func find(weekId: UUID) -> Future<[Game]>
 
-  /// Retrieves all 'Game' entites for a season ID
+  /// Retrieves all `Game` entites for a season ID
   func find(seasonId: UUID) -> Future<[Game]>
 
   /// Retrieves all `Game` entities

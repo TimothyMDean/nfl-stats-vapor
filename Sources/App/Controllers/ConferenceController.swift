@@ -10,7 +10,7 @@ final class ConferenceController : RouteCollection {
     self.repository = repository
   }
 
-  /// Registers this controller's routes at boot time
+  /// Registers this controller’s routes at boot time
   func boot(router: Router) throws {
     let conferencesRoute = router.grouped("conferences")
     conferencesRoute.get(use: index)
