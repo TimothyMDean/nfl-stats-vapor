@@ -3,7 +3,7 @@ import FluentSQLite
 import Vapor
 
 /// An entity that describes an NFL team
-struct Team: Codable {
+struct Team : Codable {
 
   var id: UUID?
   var name: String
@@ -36,4 +36,4 @@ extension Team {
   }
 }
 
-extension Team: Content {}
+extension Team : Content {}

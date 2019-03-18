@@ -2,7 +2,7 @@ import FluentSQLite
 import Vapor
 
 // Extends the `Conference` model to implement its schema migration
-extension Conference: Migration {
+extension Conference : Migration {
     public static func prepare(on connection: SQLiteConnection) -> Future<Void> {
         return Database.create(self, on: connection) { builder in
             try addProperties(to: builder)
@@ -11,7 +11,7 @@ extension Conference: Migration {
 }
 
 // A Fluent migration that seeds the Conference model with initial values
-struct SeedConferences: SQLiteMigration {
+struct SeedConferences : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {

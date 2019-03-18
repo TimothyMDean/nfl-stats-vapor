@@ -1,7 +1,7 @@
 import Vapor
 
 /// A protocol that defines the interface to a `Game` entity repository.
-protocol GameRepository: ServiceType {
+protocol GameRepository : ServiceType {
 
   /// Retrieves a `Game` with a specified ID
   func find(id: UUID) -> Future<Game?>

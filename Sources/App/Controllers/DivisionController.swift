@@ -1,7 +1,7 @@
 import Vapor
 
 /// Controls basic CRUD operations on `Division`s.
-final class DivisionController: RouteCollection {
+final class DivisionController : RouteCollection {
 
   private let repository: DivisionRepository
 

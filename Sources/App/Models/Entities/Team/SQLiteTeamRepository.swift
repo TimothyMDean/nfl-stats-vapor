@@ -3,7 +3,7 @@ import FluentSQLite
 
 // An implementation of the `TeamRepository` protocol. using an
 // SQLite database as the backend persistence layer
-struct SQLiteTeamRepository: TeamRepository {
+struct SQLiteTeamRepository : TeamRepository {
 
   let db: SQLiteDatabase.ConnectionPool
 
@@ -54,4 +54,4 @@ extension SQLiteTeamRepository {
 
 
 // Adds SQLite support to the `Team` model
-extension Team: SQLiteUUIDModel {}
+extension Team : SQLiteUUIDModel {}

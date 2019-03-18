@@ -38,4 +38,4 @@ extension Division {
 }
 
 /// Miscellaneous extensions for Vapor marker protocols
-extension Division: Content {}
+extension Division : Content {}

@@ -1,7 +1,7 @@
 import Vapor
 
 /// A protocol that defines the interface to a `Week` entity repository.
-protocol WeekRepository: ServiceType {
+protocol WeekRepository : ServiceType {
 
   /// Retrieves a `Week` with a specified ID
   func find(id: UUID) -> Future<Week?>

@@ -3,7 +3,7 @@ import FluentSQLite
 
 /// An implementation of the `WeekRepository` protocol. using an
 /// SQLite database as the backend persistence layer
-struct SQLiteWeekRepository: WeekRepository {
+struct SQLiteWeekRepository : WeekRepository {
 
   let db: SQLiteDatabase.ConnectionPool
 
@@ -54,4 +54,4 @@ extension SQLiteWeekRepository {
 
 
 // Adds SQLite support to the `Week` model
-extension Week: SQLiteUUIDModel {}
+extension Week : SQLiteUUIDModel {}

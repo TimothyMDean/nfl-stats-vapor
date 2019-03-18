@@ -1,7 +1,7 @@
 import Vapor
 
 /// Controls basic CRUD operations on `Season`s.
-final class SeasonController: RouteCollection {
+final class SeasonController : RouteCollection {
 
   private let seasonRepository: SeasonRepository
   private let weekRepository: WeekRepository

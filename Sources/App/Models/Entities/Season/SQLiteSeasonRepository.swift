@@ -3,7 +3,7 @@ import FluentSQLite
 
 // An implementation of the `SeasonRepository` protocol. using an
 // SQLite database as the backend persistence layer
-struct SQLiteSeasonRepository: SeasonRepository {
+struct SQLiteSeasonRepository : SeasonRepository {
 
   let db: SQLiteDatabase.ConnectionPool
 
@@ -47,4 +47,4 @@ extension SQLiteSeasonRepository {
 
 
 // Adds SQLite support to the `Season` model
-extension Season: SQLiteUUIDModel {}
+extension Season : SQLiteUUIDModel {}

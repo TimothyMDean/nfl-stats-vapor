@@ -1,7 +1,7 @@
 import Vapor
 
 /// Controls basic CRUD operations on `Game`s.
-final class GameController: RouteCollection {
+final class GameController : RouteCollection {
 
   private let repository: GameRepository
 

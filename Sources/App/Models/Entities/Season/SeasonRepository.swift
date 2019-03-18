@@ -1,7 +1,7 @@
 import Vapor
 
 // A protocol that defines the interface to a `Season` entity repository.
-protocol SeasonRepository: ServiceType {
+protocol SeasonRepository : ServiceType {
 
   // Retrieves a `Season` with a specified ID
   func find(id: UUID) -> Future<Season?>

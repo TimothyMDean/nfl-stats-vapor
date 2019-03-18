@@ -1,7 +1,7 @@
 import Vapor
 
 /// Controls basic CRUD operations on `Conference`s.
-final class ConferenceController: RouteCollection {
+final class ConferenceController : RouteCollection {
 
   private let repository: ConferenceRepository
 

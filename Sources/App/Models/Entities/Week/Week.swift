@@ -2,7 +2,7 @@ import Fluent
 import Vapor
 
 /// An entity that describes a week in an NFL season
-struct Week: Codable {
+struct Week : Codable {
 
   var id: UUID?
   var number: Int
@@ -38,4 +38,4 @@ extension Week {
 }
 
 /// Miscellaneous extensions for Vapor marker protocols
-extension Week: Content {}
+extension Week : Content {}

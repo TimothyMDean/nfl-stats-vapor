@@ -2,7 +2,7 @@ import FluentSQLite
 import Vapor
 
 // Extends the `Team` model to implement its schema migration
-extension Team: Migration {
+extension Team : Migration {
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
     return Database.create(self, on: connection) { builder in
       try addProperties(to: builder)
@@ -12,7 +12,7 @@ extension Team: Migration {
 }
 
 // A Fluent migration that seeds the Team model with AFC North values
-struct SeedAfcNorthTeams: SQLiteMigration {
+struct SeedAfcNorthTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -52,7 +52,7 @@ struct SeedAfcNorthTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with AFC South values
-struct SeedAfcSouthTeams: SQLiteMigration {
+struct SeedAfcSouthTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -92,7 +92,7 @@ struct SeedAfcSouthTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with AFC East values
-struct SeedAfcEastTeams: SQLiteMigration {
+struct SeedAfcEastTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -132,7 +132,7 @@ struct SeedAfcEastTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with AFC West values
-struct SeedAfcWestTeams: SQLiteMigration {
+struct SeedAfcWestTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -172,7 +172,7 @@ struct SeedAfcWestTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with NFC North values
-struct SeedNfcNorthTeams: SQLiteMigration {
+struct SeedNfcNorthTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -212,7 +212,7 @@ struct SeedNfcNorthTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with NFC South values
-struct SeedNfcSouthTeams: SQLiteMigration {
+struct SeedNfcSouthTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -252,7 +252,7 @@ struct SeedNfcSouthTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with NFC East values
-struct SeedNfcEastTeams: SQLiteMigration {
+struct SeedNfcEastTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -292,7 +292,7 @@ struct SeedNfcEastTeams: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Team model with NFC West values
-struct SeedNfcWestTeams: SQLiteMigration {
+struct SeedNfcWestTeams : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {

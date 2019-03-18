@@ -1,7 +1,7 @@
 import Vapor
 
 /// Controls basic CRUD operations on `Team`s.
-final class TeamController: RouteCollection {
+final class TeamController : RouteCollection {
 
   private let repository: TeamRepository
 

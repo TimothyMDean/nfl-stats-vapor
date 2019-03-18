@@ -1,7 +1,7 @@
 import Vapor
 
 /// Controls basic CRUD operations on `Week`s.
-final class WeekController: RouteCollection {
+final class WeekController : RouteCollection {
 
   private let repository: WeekRepository
 

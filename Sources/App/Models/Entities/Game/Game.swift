@@ -57,4 +57,4 @@ extension Game {
 
 
 /// Miscellaneous extensions for Vapor marker protocols
-extension Game: Content {}
+extension Game : Content {}

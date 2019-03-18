@@ -1,7 +1,7 @@
 import Vapor
 
 /// A protocl that defines the interface to a `Team` entity repository.
-protocol TeamRepository: ServiceType {
+protocol TeamRepository : ServiceType {
 
   /// Retrieves a `Team` with a specified ID
   func find(id: UUID) -> Future<Team?>

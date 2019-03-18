@@ -51,4 +51,4 @@ extension Season {
 }
 
 /// Miscellaneous extensions for Vapor marker protocols
-extension Season: Content {}
+extension Season : Content {}

@@ -3,7 +3,7 @@ import FluentSQLite
 
 // An implementation of the `ConferenceRepository` protocol. using an
 // SQLite database as the backend persistence layer
-struct SQLiteConferenceRepository: ConferenceRepository {
+struct SQLiteConferenceRepository : ConferenceRepository {
 
   let db: SQLiteDatabase.ConnectionPool
 
@@ -40,4 +40,4 @@ extension SQLiteConferenceRepository {
 
 
 // Adds SQLite support to the `Conference` model
-extension Conference: SQLiteUUIDModel {}
+extension Conference : SQLiteUUIDModel {}

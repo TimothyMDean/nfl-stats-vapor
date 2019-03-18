@@ -1,7 +1,7 @@
 import Vapor
 
 /// A type that describes a request to create a new NFL game
-struct CreateGameRequest: Content {
+struct CreateGameRequest : Content {
 
   var scheduledTime: Date
   var homeTeamId: Team.ID

@@ -2,7 +2,7 @@ import FluentSQLite
 import Vapor
 
 // Extends the `Division` model to implement its schema migration
-extension Division: Migration {
+extension Division : Migration {
     public static func prepare(on connection: SQLiteConnection) -> Future<Void> {
         return Database.create(self, on: connection) { builder in
             try addProperties(to: builder)
@@ -12,7 +12,7 @@ extension Division: Migration {
 }
 
 // A Fluent migration that seeds the Division model with AFC values
-struct SeedAfcDivisions: SQLiteMigration {
+struct SeedAfcDivisions : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {
@@ -53,7 +53,7 @@ struct SeedAfcDivisions: SQLiteMigration {
 }
 
 // A Fluent migration that seeds the Division model with NFC values
-struct SeedNfcDivisions: SQLiteMigration {
+struct SeedNfcDivisions : SQLiteMigration {
 
   // Performs the preparation of the migration
   static func prepare(on connection: SQLiteConnection) -> Future<Void> {

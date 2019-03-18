@@ -1,7 +1,7 @@
 import Vapor
 
 /// A protocol that defines the interface to a `Division` entity repository.
-protocol DivisionRepository: ServiceType {
+protocol DivisionRepository : ServiceType {
 
   /// Retrieves a `Division` with a specified ID
   func find(id: UUID) -> Future<Division?>

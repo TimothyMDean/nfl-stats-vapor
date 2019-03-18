@@ -3,7 +3,7 @@ import FluentSQLite
 
 /// An implementation of the `GameRepository` protocol. using an
 /// SQLite database as the backend persistence layer
-struct SQLiteGameRepository: GameRepository {
+struct SQLiteGameRepository : GameRepository {
 
   let db: SQLiteDatabase.ConnectionPool
 
@@ -61,4 +61,4 @@ extension SQLiteGameRepository {
 
 
 /// Adds SQLite support to the `Game` model
-extension Game: SQLiteUUIDModel {}
+extension Game : SQLiteUUIDModel {}

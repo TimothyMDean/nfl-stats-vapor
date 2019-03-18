@@ -3,7 +3,7 @@ import FluentSQLite
 
 // An implementation of the `DivisionRepository` protocol. using an
 // SQLite database as the backend persistence layer
-struct SQLiteDivisionRepository: DivisionRepository {
+struct SQLiteDivisionRepository : DivisionRepository {
 
   let db: SQLiteDatabase.ConnectionPool
 
@@ -47,4 +47,4 @@ extension SQLiteDivisionRepository {
 
 
 // Adds SQLite support to the `Division` model
-extension Division: SQLiteUUIDModel {}
+extension Division : SQLiteUUIDModel {}
