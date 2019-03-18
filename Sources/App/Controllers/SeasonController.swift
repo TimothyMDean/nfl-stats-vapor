@@ -38,7 +38,7 @@ final class SeasonController : RouteCollection {
   func create(_ req: Request, season: Season) throws -> Future<HTTPResponse> {
     return req.transaction(on: .sqlite) { connection in
       return self.seasonRepository.save(season: season).flatMap(to: HTTPResponse.self) { season in
-        guard let seasonId = season.id else { throw Abort(.internalServerError, reason: "Missing season ID")}
+        guard let seasonId = season.id else { throw Abort(.internalServerError, reason: "Missing season ID") }
         let location = SeasonController.location(forId: seasonId)
         let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location))
         return (1...17)

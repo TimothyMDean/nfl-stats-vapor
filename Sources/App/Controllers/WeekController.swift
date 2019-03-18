@@ -36,7 +36,7 @@ final class WeekController : RouteCollection {
   func create(_ req: Request, week: Week) throws -> Future<HTTPResponse> {
     return req.transaction(on: .sqlite) { connection in
       return self.repository.save(week: week).map(to: HTTPResponse.self) { week in
-        guard let weekId = week.id else { throw Abort(.internalServerError, reason: "Missing week ID")}
+        guard let weekId = week.id else { throw Abort(.internalServerError, reason: "Missing week ID") }
         let location = WeekController.location(forId: weekId)
         let responseHeaders = HTTPHeaders(dictionaryLiteral: ("Location", location))
         return HTTPResponse(status: .created, headers: responseHeaders)
