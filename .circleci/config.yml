@@ -6,10 +6,10 @@ jobs:
       - image: swift:4.1
     steps:
       - checkout
-      - run: 
+      - run:
           name: Compile code
           command: swift build
-      - run: 
+      - run:
           name: Run unit tests
           command: swift test
 
@@ -18,7 +18,7 @@ jobs:
       - image: swift:4.1
     steps:
       - checkout
-      - run: 
+      - run:
           name: Compile code with optimizations
           command: swift build -c release
 
@@ -40,4 +40,3 @@ workflows:
     jobs:
       - linux
       - linux-release
-      
